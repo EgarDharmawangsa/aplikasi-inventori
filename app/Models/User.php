@@ -16,11 +16,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    // ];
+
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,5 +45,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function barangs() {
+        return $this->hasMany(Barang::class);
+    }
+
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function scopeFilter($query, $filters) {
+        $query->when($filters['petugas'] ?? false, function($query, $barang) {
+            return $query->where('name', 'like', '%' . $barang . '%');
+        });
+
+        $query->when($filters['role'] ?? false, function($query, $role) {
+            return $query->whereHas('role', function($query) use ($role) {
+                $query->where('name', $role);
+            });
+        });
     }
 }

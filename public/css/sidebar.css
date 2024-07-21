@@ -1,0 +1,22 @@
+.sidebar {
+    background-color: #545454;
+}
+
+.sdbar-item {
+    padding: 0;
+    height: 40px;
+} 
+
+.sdbar-btn {
+    height: 100%;
+    width: 100%;
+    text-align: left;
+    background-color: #545454;
+    border: 1px solid rgb(156, 156, 156);
+    color: white;
+    font-weight: 500;
+}
+
+.sdbar-btn:hover {
+    background-color: #212529;
+}
